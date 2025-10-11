@@ -1,4 +1,10 @@
 # MediChain-DApp
+### Team Members
+SAGAR V-220071601212
+S.SAMVEL-220071601219
+SANTOSH T - 220071601223
+SHOIB AHAMAD -22007160139
+SHYAM SUNDAR-220071601243
 
 ## Overview
 MediChain-DApp is a decentralized desktop application designed to manage and secure medical records using blockchain technology. It leverages the Ethereum blockchain, IPFS for storage, and a Python/Flask backend integrated with FlaskGUI for a seamless desktop experience. This approach ensures data integrity, privacy, and accessibility for patients and authorized healthcare providers.
