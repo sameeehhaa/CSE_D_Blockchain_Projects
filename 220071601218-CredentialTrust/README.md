@@ -1,11 +1,11 @@
 # Credential Trust: A Blockchain-Based Ecosystem for Verifiable Internships and Job Offers
 
 ## TEAM MEMBERS: 
-Sameeha Mohamed Basheer Mohideen - 220071601218
-Sarifa Shifana - 220071601225
-Shahma Khadeeja - 220071601230
-Sherin Bharathi - 220071601238
-Sumerah Shernaz - 220071601255
+- Sameeha Mohamed Basheer Mohideen - 220071601218
+- Sarifa Shifana - 220071601225
+- Shahma Khadeeja - 220071601230
+- Sherin Bharathi - 220071601238
+- Sumerah Shernaz - 220071601255
 
 ## Project Overview
 This project is a **blockchain-based system** for creating, verifying, and managing digital credentials for internships and job offers. It allows organizations to issue secure, verifiable certificates that cannot be faked. The system also supports revoking credentials if needed, ensuring trust and transparency.
@@ -48,3 +48,30 @@ The system provides structured output in **JSON**:
   "issuerDID": "did:credtrust:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "status": "active"
 }
+
+## Field Descriptions 
+**credentialId**  
+- A **unique identifier** for the credential.  
+- Ensures each credential is **distinct and traceable** within the system.  
+- Used for **verification, revocation, and record-keeping**.
+
+**holderName**  
+- Name of the individual who holds the credential.  
+- Allows verifiers (**employers, universities, etc.**) to confirm ownership.
+
+**issuerDID**  
+- The **Decentralized Identifier (DID)** of the issuing organization.  
+- Confirms that the credential was issued by a **registered and trusted entity**.
+
+**status**  
+- Indicates the **current validity** of the credential.  
+- Possible values:  
+  - `"active"` → Credential is **valid and trusted**.  
+  - `"revoked"` → Credential has been **deactivated**.  
+  - `"expired"` → Credential has **expired** (if implemented).
+
+## Purpose of the Output
+- **Verification:** Using the `credentialId`, anyone can **verify the authenticity** of the credential.  
+- **Transparency:** Structured JSON ensures **clear information** for humans and machines.  
+- **Automation:** Can be integrated into **automated verification systems** for HR, academic checks, or professional credential validation.  
+- **Audit & Tracking:** Each credential’s **unique ID and issuer DID** allow **full tracking** of the credential lifecycle—from issuance to revocation.
