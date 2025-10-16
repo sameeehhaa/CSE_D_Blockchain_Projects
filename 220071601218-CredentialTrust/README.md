@@ -1,11 +1,11 @@
 # Credential Trust: A Blockchain-Based Ecosystem for Verifiable Internships and Job Offers
 
 ## TEAM MEMBERS: 
-Sameeha Mohamed Basheer Mohideen - 220071601218
-Sarifa Shifana - 220071601225
-Shahma Khadeeja - 220071601230
-Sherin Bharathi - 220071601238
-Sumerah Shernaz - 220071601255
+- Sameeha Mohamed Basheer Mohideen - 220071601218
+- Sarifa Shifana - 220071601225
+- Shahma Khadeeja - 220071601230
+- Sherin Bharathi - 220071601238
+- Sumerah Shernaz - 220071601255
 
 ## Project Overview
 This project is a **blockchain-based system** for creating, verifying, and managing digital credentials for internships and job offers. It allows organizations to issue secure, verifiable certificates that cannot be faked. The system also supports revoking credentials if needed, ensuring trust and transparency.
