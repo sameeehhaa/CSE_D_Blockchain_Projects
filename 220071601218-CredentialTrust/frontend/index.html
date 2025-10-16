@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Credential Trust</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #faf7f2;
+        margin: 0;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #333;
+    }
+
+    /* --- Logo Styles --- */
+    .logo {
+        position: fixed;
+        top: 20px;
+        left: 25px;
+        z-index: 100;
+    }
+
+    .logo img {
+        height: 75px;
+        width: aut0;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 42px;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, #d4a373, #b88e2f);
+        padding: 25px 60px;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 60px;
+        margin-top: 60px; /* adds space below fixed logo */
+        box-shadow: 0 4px 15px rgba(184, 142, 47, 0.3);
+        letter-spacing: 1px;
+    }
+
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #2f2f2f;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        background-color: #fff;
+        border: none;
+        border-radius: 16px;
+        padding: 35px;
+        margin-bottom: 35px;
+        width: 100%;
+        max-width: 650px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    input[type="text"] {
+        width: 85%;
+        max-width: 400px;
+        padding: 14px 18px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+        background-color: #fafafa;
+        transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #b88e2f;
+        box-shadow: 0 0 6px rgba(184, 142, 47, 0.3);
+        outline: none;
+        background-color: #fff;
+    }
+
+    button {
+        background-color: #b88e2f;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 13px 30px;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        font-weight: 500;
+    }
+
+    button:hover {
+        background-color: #a17724;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(184, 142, 47, 0.3);
+    }
+
+    pre {
+        width: 100%;
+        max-width: 550px;
+        background-color: #f9f4ec;
+        color: #444;
+        padding: 18px;
+        border-radius: 10px;
+        margin-top: 15px;
+        overflow-x: auto;
+        font-size: 14px;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+        text-align: left;
+    }
+</style>
+</head>
+<body>
+    <!-- Logo in the top-left corner -->
+    <div class="logo">
+        <img src="pic.png" alt="Logo">
+    </div>
+
+    
+
+    <div class="section">
+        <h2>Register Issuer</h2>
+        <input type="text" id="issuerName" placeholder="Enter Issuer Name">
+        <button id="registerBtn">Register</button>
+        <pre id="issuerResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>Issue Credential</h2>
+        <input type="text" id="holderName" placeholder="Enter Holder Name">
+        <input type="text" id="issuerDIDIssue" placeholder="Enter Issuer DID">
+        <button id="issueBtn">Issue Credential</button>
+        <pre id="issueResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>Verify Credential</h2>
+        <input type="text" id="verifyCredentialId" placeholder="Enter Credential ID">
+        <button id="verifyBtn">Verify</button>
+        <pre id="verifyResult"></pre>
+    </div>
+
+    <div class="section">
+        <h2>Revoke Credential</h2>
+        <input type="text" id="revokeCredentialId" placeholder="Enter Credential ID">
+        <button id="revokeBtn">Revoke</button>
+        <pre id="revokeResult"></pre>
+    </div>
+
+<script>
+const baseUrl = "http://localhost:4000";
+
+// Register Issuer
+document.getElementById("registerBtn").addEventListener("click", async () => {
+    const name = document.getElementById("issuerName").value;
+    if (!name) return alert("Enter issuer name");
+    try {
+        const res = await fetch(baseUrl + "/register-issuer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name })
+        });
+        const data = await res.json();
+        document.getElementById("issuerResult").innerText = JSON.stringify(data, null, 2);
+        document.getElementById("issuerDIDIssue").value = data.issuerDID;
+    } catch (err) { console.error(err); alert("Error connecting to backend"); }
+});
+
+// Issue Credential
+document.getElementById("issueBtn").addEventListener("click", async () => {
+    const holderName = document.getElementById("holderName").value;
+    const issuerDID = document.getElementById("issuerDIDIssue").value;
+    if (!holderName || !issuerDID) return alert("Enter holder name and issuer DID");
+    try {
+        const res = await fetch(baseUrl + "/issue-credential", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ holderName, issuerDID })
+        });
+        const data = await res.json();
+        document.getElementById("issueResult").innerText = JSON.stringify(data, null, 2);
+        document.getElementById("verifyCredentialId").value = data.credentialId;
+        document.getElementById("revokeCredentialId").value = data.credentialId;
+    } catch (err) { console.error(err); alert("Error issuing credential"); }
+});
+
+// Verify Credential
+document.getElementById("verifyBtn").addEventListener("click", async () => {
+    const credentialId = document.getElementById("verifyCredentialId").value;
+    if (!credentialId) return alert("Enter Credential ID");
+    try {
+        const res = await fetch(baseUrl + "/verify-credential", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credentialId })
+        });
+        const data = await res.json();
+        document.getElementById("verifyResult").innerText = JSON.stringify(data, null, 2);
+    } catch (err) { console.error(err); alert("Error verifying credential"); }
+});
+
+// Revoke Credential
+document.getElementById("revokeBtn").addEventListener("click", async () => {
+    const credentialId = document.getElementById("revokeCredentialId").value;
+    if (!credentialId) return alert("Enter Credential ID");
+    try {
+        const res = await fetch(baseUrl + "/revoke-credential", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credentialId })
+        });
+        const data = await res.json();
+        document.getElementById("revokeResult").innerText = JSON.stringify(data, null, 2);
+    } catch (err) { console.error(err); alert("Error revoking credential"); }
+});
+</script>
+</body>
+</html>
